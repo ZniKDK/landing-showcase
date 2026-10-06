@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Лендинги с анимацией — витрина работ</title>
-  <meta name="description" content="Три демо-лендинга в разных стилях: IT-обслуживание офисов, цветочная мастерская и автошкола. Живые анимации, конструктор, квиз, калькуляторы, светлая и тёмная тема.">
+  <meta name="description" content="Пять демо-лендингов в разных стилях: IT-обслуживание офисов, цветочная мастерская, автошкола, ремонт квартир и груминг-салон. Живые анимации, конструктор, квиз, калькуляторы, светлая и тёмная тема.">
   <script>document.documentElement.classList.add('js');!function(){var m='system';try{m=localStorage.getItem('ls-theme')||'system'}catch(e){}var d=m==='dark'||(m==='system'&&matchMedia('(prefers-color-scheme: dark)').matches);document.documentElement.dataset.theme=d?'dark':'light';document.documentElement.dataset.themeMode=m}()</script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='2' y='2' width='12' height='28' rx='4' fill='%237b61ff'/%3E%3Crect x='18' y='2' width='12' height='12' rx='4' fill='%23ff48b0'/%3E%3Crect x='18' y='18' width='12' height='12' rx='4' fill='%23ffc20e'/%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -182,20 +182,37 @@
       gap: 4px;
     }
 
+    .pack {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 3px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 500;
+      background: color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+
+    .links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .work a.code {
+      color: var(--text-2);
+      font-weight: 500;
+    }
+
     .work a.go {
       display: inline-block;
-      margin-top: 22px;
       padding: 12px 22px;
       border-radius: 999px;
       background: var(--accent);
-      color: #fff;
+      color: var(--accent-ink);
       font-weight: 500;
       text-decoration: none;
-    }
-
-    .work:nth-child(2) a.go,
-    .work:nth-child(3) a.go {
-      color: #17181b;
     }
 
     .foot {
@@ -225,28 +242,33 @@
     </header>
 
     <section class="intro">
-      <h1>Три лендинга, три характера</h1>
-      <p>Демо-сайты для малого бизнеса. В каждом — интерактив, который продаёт: живая схема, конструктор, квиз или калькулятор. Светлая и тёмная тема, адаптив, форма заявки. Наведите на превью — сайт сам прокрутится.</p>
+      <h1>Пять лендингов, пять характеров</h1>
+      <p>Демо-сайты для малого бизнеса, от простой страницы с записью до сайта с калькулятором и конструктором. В каждом — интерактив, который продаёт: живая схема, конструктор, квиз или калькулятор. Светлая и тёмная тема, адаптив, форма заявки. Наведите на превью — сайт сам прокрутится.</p>
     </section>
 
     <ul class="works" role="list">
-      <li class="work" style="--accent:#7b61ff">
-        <a class="preview" href="it-office/" aria-label="Открыть сайт «Аптайм»"><iframe src="it-office/" title="Превью сайта «Аптайм»" loading="lazy" tabindex="-1"></iframe></a>
+      <li class="work" style="--accent:#7b61ff;--accent-ink:#fff">
+        <a class="preview" href="https://znikdk.github.io/landing-it-service/" aria-label="Открыть сайт «Аптайм»"><iframe src="https://znikdk.github.io/landing-it-service/" title="Превью сайта «Аптайм»" loading="lazy" tabindex="-1"></iframe></a>
         <div>
+          <p class="pack">Пакет «Бизнес»</p>
           <h2>Аптайм</h2>
           <p class="niche">IT-обслуживание офисов</p>
-          <p class="style">Стиль Dev-Clean: тёмная тема по мотивам JetBrains, светлая — Android Developers.</p>
+          <p class="style">Dev-Clean: тёмная тема по мотивам JetBrains, светлая — Android Developers.</p>
           <ul class="features">
             <li>Живая карта офисной сети: сбой → починка в логе терминала</li>
             <li>Вкладки услуг с автопереключением и мини-интерфейсами</li>
             <li>Калькулятор тарифа по числу рабочих мест</li>
           </ul>
-          <a class="go" href="it-office/">Открыть сайт</a>
+          <div class="links">
+            <a class="go" href="https://znikdk.github.io/landing-it-service/">Открыть сайт</a>
+            <a class="code" href="https://github.com/ZniKDK/landing-it-service">Код на GitHub</a>
+          </div>
         </div>
       </li>
-      <li class="work" style="--accent:#ff48b0">
-        <a class="preview" href="flowers/" aria-label="Открыть сайт «Стебель»"><iframe src="flowers/" title="Превью сайта «Стебель»" loading="lazy" tabindex="-1"></iframe></a>
+      <li class="work" style="--accent:#ff48b0;--accent-ink:#17181b">
+        <a class="preview" href="https://znikdk.github.io/landing-flowers/" aria-label="Открыть сайт «Стебель»"><iframe src="https://znikdk.github.io/landing-flowers/" title="Превью сайта «Стебель»" loading="lazy" tabindex="-1"></iframe></a>
         <div>
+          <p class="pack">Пакет «Бизнес»</p>
           <h2>Стебель</h2>
           <p class="niche">Цветочная мастерская с доставкой</p>
           <p class="style">Ризография: флуоресцентные краски, растр, слои со сбитым совмещением.</p>
@@ -255,12 +277,16 @@
             <li>Конструктор букета: цветы растут, цена считается</li>
             <li>Каталог с FLIP-фильтром, курьер на маршруте, стопка отзывов</li>
           </ul>
-          <a class="go" href="flowers/">Открыть сайт</a>
+          <div class="links">
+            <a class="go" href="https://znikdk.github.io/landing-flowers/">Открыть сайт</a>
+            <a class="code" href="https://github.com/ZniKDK/landing-flowers">Код на GitHub</a>
+          </div>
         </div>
       </li>
-      <li class="work" style="--accent:#ffc20e">
-        <a class="preview" href="driving-school/" aria-label="Открыть сайт «Зелёная волна»"><iframe src="driving-school/" title="Превью сайта «Зелёная волна»" loading="lazy" tabindex="-1"></iframe></a>
+      <li class="work" style="--accent:#ffc20e;--accent-ink:#17181b">
+        <a class="preview" href="https://znikdk.github.io/landing-driving-school/" aria-label="Открыть сайт «Зелёная волна»"><iframe src="https://znikdk.github.io/landing-driving-school/" title="Превью сайта «Зелёная волна»" loading="lazy" tabindex="-1"></iframe></a>
         <div>
+          <p class="pack">Пакет «Бизнес»</p>
           <h2>Зелёная волна</h2>
           <p class="niche">Автошкола</p>
           <p class="style">Дорожные указатели: синие щиты, разметка, светофоры; ночью — фары.</p>
@@ -269,7 +295,46 @@
             <li>Квиз по билетам ПДД со светофором-прогрессом</li>
             <li>Калькулятор с рычагом КПП и обратный отсчёт до старта групп</li>
           </ul>
-          <a class="go" href="driving-school/">Открыть сайт</a>
+          <div class="links">
+            <a class="go" href="https://znikdk.github.io/landing-driving-school/">Открыть сайт</a>
+            <a class="code" href="https://github.com/ZniKDK/landing-driving-school">Код на GitHub</a>
+          </div>
+        </div>
+      </li>
+      <li class="work" style="--accent:#ff6b1a;--accent-ink:#fff">
+        <a class="preview" href="https://znikdk.github.io/landing-renovation/" aria-label="Открыть сайт «Прораб и сыновья»"><iframe src="https://znikdk.github.io/landing-renovation/" title="Превью сайта «Прораб и сыновья»" loading="lazy" tabindex="-1"></iframe></a>
+        <div>
+          <p class="pack">Пакет «Стандарт»</p>
+          <h2>Прораб и сыновья</h2>
+          <p class="niche">Ремонт квартир</p>
+          <p class="style">Чертёж: калька в клетку, размерные линии, штамп; тёмная тема — синька.</p>
+          <ul class="features">
+            <li>План квартиры вычерчивается, комнаты показывают площадь и цену</li>
+            <li>Калькулятор сметы с графиком этапов</li>
+            <li>Шторка «было и стало»</li>
+          </ul>
+          <div class="links">
+            <a class="go" href="https://znikdk.github.io/landing-renovation/">Открыть сайт</a>
+            <a class="code" href="https://github.com/ZniKDK/landing-renovation">Код на GitHub</a>
+          </div>
+        </div>
+      </li>
+      <li class="work" style="--accent:#b8a4ff;--accent-ink:#17181b">
+        <a class="preview" href="https://znikdk.github.io/landing-grooming/" aria-label="Открыть сайт «Чистый хвост»"><iframe src="https://znikdk.github.io/landing-grooming/" title="Превью сайта «Чистый хвост»" loading="lazy" tabindex="-1"></iframe></a>
+        <div>
+          <p class="pack">Пакет «Эконом»</p>
+          <h2>Чистый хвост</h2>
+          <p class="niche">Груминг-салон</p>
+          <p class="style">Мягкий «пухлый» стиль: мята, пастель, пружинящие кнопки.</p>
+          <ul class="features">
+            <li>Пёс, которого можно помыть: пузыри, причёска, бантик</li>
+            <li>Глаза следят за курсором, хвост виляет</li>
+            <li>Цены по размеру питомца и запись на свободное время</li>
+          </ul>
+          <div class="links">
+            <a class="go" href="https://znikdk.github.io/landing-grooming/">Открыть сайт</a>
+            <a class="code" href="https://github.com/ZniKDK/landing-grooming">Код на GitHub</a>
+          </div>
         </div>
       </li>
     </ul>
