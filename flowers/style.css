@@ -1,0 +1,1043 @@
+/* «Стебель» — стиль ризографа: несколько флуоресцентных красок, которые печатаются
+   отдельными слоями, смешиваются на пересечениях и чуть сбиваются при совмещении.
+   Светлая тема — печать на белой бумаге (multiply), тёмная — «ночная» печать (screen). */
+
+:root {
+  --paper: #fbfbf8;
+  --paper-2: #f0f1ec;
+  --ink: #1f2a44;
+  --ink-2: #56607a;
+  --pink: #ff48b0;
+  --green: #00a95c;
+  --blue: #0078bf;
+  --yellow: #ffe800;
+  --blend: multiply;
+  --line: rgba(31, 42, 68, .18);
+  --focus: #0078bf;
+  --display: 'Yeseva One', Georgia, serif;
+  --font: 'Golos Text', system-ui, sans-serif;
+  color-scheme: light;
+}
+
+[data-theme=dark] {
+  --paper: #16182b;
+  --paper-2: #1e2138;
+  --ink: #f5f1ea;
+  --ink-2: #b7b6c6;
+  --pink: #ff5cbe;
+  --green: #1fc47c;
+  --blue: #3aa3ff;
+  --yellow: #ffe45c;
+  --blend: screen;
+  --line: rgba(245, 241, 234, .18);
+  --focus: #ffe45c;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.6;
+  transition: background-color .3s, color .3s;
+}
+
+/* Зерно бумаги поверх всей страницы */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 100;
+  opacity: .22;
+  mix-blend-mode: var(--blend);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.defs {
+  position: absolute;
+  width: 0;
+  height: 0;
+}
+
+.mono {
+  font-variant-numeric: tabular-nums;
+}
+
+.container {
+  width: min(1180px, 100% - 32px);
+  margin-inline: auto;
+}
+
+/* Все фигуры иллюстраций смешиваются как краски на бумаге */
+.riso path,
+.riso circle,
+.riso ellipse,
+.riso rect,
+.riso line {
+  mix-blend-mode: var(--blend);
+}
+
+.riso {
+  isolation: isolate;
+  overflow: visible;
+}
+
+.f-pink { fill: var(--pink); }
+.f-green { fill: var(--green); }
+.f-blue { fill: var(--blue); }
+.f-yellow { fill: var(--yellow); }
+.f-dots-pink { fill: url(#dots-pink); }
+.f-dots-blue { fill: url(#dots-blue); }
+.f-dots-yellow { fill: url(#dots-yellow); }
+.f-lines-blue { fill: url(#lines-blue); }
+.s-blue { fill: none; stroke: var(--blue); stroke-width: 2.4; stroke-linecap: round; }
+.s-pink { fill: none; stroke: var(--pink); stroke-width: 2.4; stroke-linecap: round; }
+.s-green { fill: none; stroke: var(--green); stroke-width: 3; stroke-linecap: round; }
+
+/* Заголовки «печатаются» двумя прогонами: розовый слой сдвинут относительно синего.
+   При появлении на экране слои сходятся (как при совмещении форм на ризографе). */
+.print {
+  font-family: var(--display);
+  font-weight: 400;
+  color: var(--ink);
+  text-shadow: var(--px, 3px) var(--py, 2px) 0 var(--pink);
+  transition: text-shadow .9s cubic-bezier(.2, .8, .2, 1);
+}
+
+.js .print {
+  --px: 18px;
+  --py: -10px;
+}
+
+.js .print.is-in {
+  --px: 3px;
+  --py: 2px;
+}
+
+[data-theme=dark] .print {
+  text-shadow: var(--px, 3px) var(--py, 2px) 0 color-mix(in srgb, var(--pink) 75%, transparent);
+}
+
+/* ---------- Шапка ---------- */
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 2px dashed var(--line);
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  height: 70px;
+}
+
+.logo {
+  font-family: var(--display);
+  font-size: 30px;
+  line-height: 1;
+  text-decoration: none;
+  text-shadow: 2px 1px 0 var(--green);
+}
+
+.nav {
+  display: flex;
+  gap: 24px;
+  margin-left: auto;
+}
+
+.nav a,
+.phone {
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.nav a {
+  background: linear-gradient(var(--yellow), var(--yellow)) 0 88% / 0 40% no-repeat;
+  transition: background-size .3s;
+}
+
+.nav a:hover {
+  background-size: 100% 40%;
+}
+
+.phone {
+  font-variant-numeric: tabular-nums;
+}
+
+.theme-btn {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: transparent;
+  transition: transform .3s;
+}
+
+.theme-btn:hover {
+  transform: rotate(-20deg);
+}
+
+.theme-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+}
+
+/* ---------- Кнопки ---------- */
+
+.btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 28px;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  font-weight: 600;
+  font-size: 16px;
+  text-decoration: none;
+  background: transparent;
+  isolation: isolate;
+  transition: transform .2s;
+}
+
+/* «Сбитый» розовый оттиск под кнопкой, при наведении он съезжает в сторону */
+.btn::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--pink);
+  mix-blend-mode: var(--blend);
+  transform: translate(0, 0);
+  transition: transform .25s cubic-bezier(.3, 1.6, .5, 1);
+}
+
+.btn-ink {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-ink::before {
+  transform: translate(5px, 5px);
+}
+
+.btn-ink:hover::before {
+  transform: translate(8px, 8px);
+}
+
+.btn-line::before {
+  opacity: 0;
+}
+
+.btn-line:hover::before {
+  opacity: 1;
+  transform: translate(5px, 5px);
+}
+
+.btn:active {
+  transform: translate(3px, 3px);
+}
+
+.btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+}
+
+.btn-wide {
+  width: 100%;
+}
+
+/* ---------- Hero ---------- */
+
+.hero {
+  padding: 56px 0 40px;
+  overflow: hidden;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+}
+
+.hero-title {
+  font-size: clamp(40px, 5.6vw, 76px);
+  line-height: 1.02;
+  letter-spacing: -.01em;
+}
+
+.hero-lead {
+  margin-top: 24px;
+  max-width: 30em;
+  font-size: 19px;
+  color: var(--ink-2);
+}
+
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 36px;
+}
+
+.hero-art {
+  position: relative;
+}
+
+.bouquet {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  margin-inline: auto;
+}
+
+.stamp {
+  position: absolute;
+  left: 2%;
+  bottom: 6%;
+  width: clamp(96px, 12vw, 130px);
+}
+
+.stamp svg {
+  width: 100%;
+  overflow: visible;
+}
+
+.stamp text {
+  font-family: var(--font);
+  font-size: 10.6px;
+  font-weight: 600;
+  letter-spacing: .06em;
+  fill: var(--blue);
+}
+
+.stamp circle {
+  fill: var(--yellow);
+  mix-blend-mode: var(--blend);
+}
+
+.stamp svg {
+  transform: rotate(var(--rot, 0deg));
+}
+
+/* ---------- Секции ---------- */
+
+.section {
+  padding: 110px 0;
+}
+
+.h2 {
+  font-size: clamp(34px, 4.4vw, 58px);
+  line-height: 1.05;
+  max-width: 16em;
+}
+
+.lead {
+  margin-top: 16px;
+  max-width: 38em;
+  color: var(--ink-2);
+  font-size: 18px;
+}
+
+/* ---------- Конструктор ---------- */
+
+.builder {
+  background: var(--paper-2);
+  border-block: 2px dashed var(--line);
+}
+
+.builder-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 40px;
+  margin-top: 48px;
+  align-items: start;
+}
+
+.builder-stage {
+  position: sticky;
+  top: 96px;
+  aspect-ratio: 400 / 440;
+  border-radius: 28px;
+  background: var(--paper);
+  border: 2px solid var(--ink);
+  overflow: hidden;
+}
+
+.builder-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.builder-empty {
+  position: absolute;
+  inset: auto 0 22px;
+  text-align: center;
+  color: var(--ink-2);
+  font-size: 15px;
+  transition: opacity .3s;
+}
+
+.builder-stage.has-flowers .builder-empty {
+  opacity: 0;
+}
+
+/* Цветок появляется с отскоком, уходит — сжимаясь */
+.b-flower {
+  transition: transform .6s cubic-bezier(.3, 1.3, .5, 1);
+}
+
+.b-flower > g {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: bloom .55s cubic-bezier(.3, 1.6, .5, 1) both;
+}
+
+.b-flower.is-leaving > g {
+  animation: wilt .3s ease-in forwards;
+}
+
+@keyframes bloom {
+  from { transform: scale(0) rotate(-40deg); }
+}
+
+@keyframes wilt {
+  to { transform: scale(0) rotate(30deg); opacity: 0; }
+}
+
+.b-stems line {
+  animation: grow .5s ease-out both;
+}
+
+@keyframes grow {
+  from { stroke-dashoffset: var(--len); }
+}
+
+.b-wrap path {
+  transition: fill .4s, opacity .4s;
+}
+
+.flower-list {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.flower-row {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px 10px 10px;
+  border-radius: 18px;
+  background: var(--paper);
+  border: 2px solid transparent;
+  transition: border-color .2s;
+}
+
+.flower-row.has-count {
+  border-color: var(--ink);
+}
+
+.flower-row svg {
+  width: 48px;
+  height: 48px;
+}
+
+.flower-row h3 {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.flower-row p {
+  color: var(--ink-2);
+  font-size: 14px;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.stepper button {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  font-size: 20px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  transition: background-color .2s, transform .15s;
+}
+
+.stepper button:hover:not(:disabled) {
+  background: var(--yellow);
+  color: #1f2a44;
+}
+
+.stepper button:active:not(:disabled) {
+  transform: scale(.88);
+}
+
+.stepper button:disabled {
+  opacity: .3;
+  cursor: default;
+}
+
+.stepper output {
+  min-width: 2ch;
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.stepper output.is-tick {
+  animation: tick .3s;
+}
+
+@keyframes tick {
+  40% { transform: translateY(-4px) scale(1.25); color: var(--pink); }
+}
+
+.wraps {
+  border: 0;
+  padding: 0;
+  margin: 24px 0 0;
+}
+
+.wraps legend {
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.wrap-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.wrap-options label {
+  position: relative;
+  cursor: pointer;
+}
+
+.wrap-options input {
+  position: absolute;
+  opacity: 0;
+}
+
+.wrap-options span {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  font-size: 15px;
+  transition: background-color .2s, color .2s;
+}
+
+.wrap-options input:checked + span {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.wrap-options input:focus-visible + span {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+.builder-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin: 28px 0 16px;
+  padding-top: 20px;
+  border-top: 2px dashed var(--line);
+  color: var(--ink-2);
+}
+
+.total {
+  font-family: var(--display);
+  font-size: 44px;
+  color: var(--ink);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Каталог ---------- */
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 32px 0 40px;
+}
+
+.chip {
+  padding: 8px 18px;
+  border-radius: 999px;
+  border: 2px solid var(--ink);
+  background: transparent;
+  font-weight: 500;
+  transition: background-color .2s, color .2s, transform .15s;
+}
+
+.chip:active {
+  transform: scale(.95);
+}
+
+.chip[aria-pressed=true] {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #1f2a44;
+}
+
+.cards {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 28px;
+  background: var(--paper-2);
+  padding: 18px 18px 22px;
+}
+
+.card-art {
+  aspect-ratio: 1;
+  border-radius: 20px;
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.card-art svg {
+  width: 88%;
+  height: 88%;
+  transition: transform .5s cubic-bezier(.3, 1.3, .5, 1);
+}
+
+/* При наведении слои «разъезжаются», как при плохом совмещении */
+.card-art .plate {
+  transition: transform .4s cubic-bezier(.3, 1.4, .5, 1);
+}
+
+.card:hover .card-art svg {
+  transform: rotate(-4deg) scale(1.04);
+}
+
+.card:hover .card-art .plate-pink {
+  transform: translate(5px, -3px);
+}
+
+.card:hover .card-art .plate-blue {
+  transform: translate(-4px, 4px);
+}
+
+.card h3 {
+  margin-top: 18px;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 26px;
+  line-height: 1.1;
+}
+
+.card p {
+  color: var(--ink-2);
+  font-size: 15px;
+  margin-top: 6px;
+}
+
+.card-foot {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.card-price {
+  font-weight: 600;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+}
+
+.card .btn {
+  min-height: 42px;
+  padding: 0 18px;
+  font-size: 15px;
+}
+
+/* ---------- Доставка ---------- */
+
+.delivery {
+  background: var(--paper-2);
+  border-block: 2px dashed var(--line);
+}
+
+.route {
+  position: relative;
+  margin-top: 56px;
+  height: 140px;
+}
+
+.route-svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.route-path,
+.route-done {
+  fill: none;
+  stroke-width: 4;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.route-path {
+  stroke: var(--line);
+  stroke-dasharray: 2 12;
+}
+
+.route-done {
+  stroke: var(--green);
+  mix-blend-mode: var(--blend);
+}
+
+.courier {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 54px;
+  margin: -30px 0 0 -27px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  overflow: visible;
+}
+
+.courier-box {
+  fill: var(--pink);
+  stroke: none;
+  mix-blend-mode: var(--blend);
+}
+
+.route-steps {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 28px;
+  margin-top: 24px;
+}
+
+.route-steps li {
+  opacity: .35;
+  transition: opacity .4s;
+}
+
+.route-steps li.is-reached {
+  opacity: 1;
+}
+
+.step-n {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid var(--ink);
+  font-family: var(--display);
+  font-size: 22px;
+  transition: background-color .3s;
+}
+
+.route-steps li.is-reached .step-n {
+  background: var(--yellow);
+  color: #1f2a44;
+  border-color: #1f2a44;
+}
+
+.route-steps h3 {
+  margin-top: 14px;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 26px;
+}
+
+.route-steps p {
+  margin-top: 6px;
+  color: var(--ink-2);
+  font-size: 15.5px;
+}
+
+/* ---------- Отзывы-стопка ---------- */
+
+.reviews-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: center;
+}
+
+.reviews-grid .btn {
+  margin-top: 28px;
+}
+
+.stack {
+  position: relative;
+  height: 340px;
+}
+
+.review {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 36px;
+  border-radius: 28px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  touch-action: pan-y;
+  user-select: none;
+  transform: translate(calc(var(--depth) * 10px), calc(var(--depth) * 12px)) rotate(calc(var(--depth) * 2.5deg));
+  transition: transform .45s cubic-bezier(.3, 1.2, .5, 1), opacity .3s;
+}
+
+.review:nth-child(4n+1) { background: color-mix(in srgb, var(--pink) 16%, var(--paper)); }
+.review:nth-child(4n+2) { background: color-mix(in srgb, var(--yellow) 30%, var(--paper)); }
+.review:nth-child(4n+3) { background: color-mix(in srgb, var(--blue) 14%, var(--paper)); }
+.review:nth-child(4n+4) { background: color-mix(in srgb, var(--green) 14%, var(--paper)); }
+
+.review.is-top {
+  cursor: grab;
+}
+
+.review.is-dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+.review blockquote {
+  font-family: var(--display);
+  font-size: clamp(21px, 2.2vw, 27px);
+  line-height: 1.3;
+}
+
+.review figcaption {
+  color: var(--ink-2);
+  font-size: 15px;
+}
+
+/* ---------- Заказ ---------- */
+
+.order-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.form {
+  position: relative;
+  display: grid;
+  gap: 14px;
+  padding: 32px;
+  border-radius: 28px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+}
+
+.field label {
+  font-weight: 500;
+  font-size: 15px;
+}
+
+.field input,
+.field textarea {
+  min-height: 50px;
+  padding: 12px 16px;
+  border-radius: 14px;
+  border: 2px solid var(--line);
+  background: var(--paper-2);
+  resize: vertical;
+  transition: border-color .2s;
+}
+
+.field input:focus,
+.field textarea:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--yellow);
+}
+
+.field.has-error input {
+  border-color: var(--pink);
+  animation: shake .35s;
+}
+
+@keyframes shake {
+  25% { transform: translateX(-6px); }
+  75% { transform: translateX(6px); }
+}
+
+.field-error {
+  min-height: 1em;
+  font-size: 13px;
+  color: var(--pink);
+  font-weight: 500;
+}
+
+.form-status {
+  min-height: 1.4em;
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+.form.is-sent .form-status {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* Лепестки, разлетающиеся после отправки (создаются в app.js) */
+.petal {
+  position: fixed;
+  z-index: 90;
+  width: 16px;
+  height: 22px;
+  border-radius: 80% 0 80% 0;
+  pointer-events: none;
+  mix-blend-mode: var(--blend);
+}
+
+/* ---------- Подвал ---------- */
+
+.footer {
+  padding: 48px 0;
+  border-top: 2px dashed var(--line);
+  font-size: 15px;
+  color: var(--ink-2);
+}
+
+.footer-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.footer .logo {
+  color: var(--ink);
+}
+
+/* ---------- Адаптив ---------- */
+
+@media (max-width: 1000px) {
+  .nav {
+    display: none;
+  }
+
+  .phone {
+    margin-left: auto;
+  }
+
+  .hero-grid,
+  .builder-grid,
+  .reviews-grid,
+  .order-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .builder-stage {
+    position: relative;
+    top: 0;
+    max-width: 460px;
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .route-steps {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .phone {
+    display: none;
+  }
+
+  .theme-btn {
+    margin-left: auto;
+  }
+
+  .section {
+    padding: 72px 0;
+  }
+
+  .cards,
+  .route-steps {
+    grid-template-columns: 1fr;
+  }
+
+  .route {
+    display: none;
+  }
+
+  .route-steps li {
+    opacity: 1;
+  }
+
+  .form {
+    padding: 22px;
+  }
+
+  .review {
+    padding: 26px;
+  }
+
+  .stack {
+    height: 380px;
+  }
+}
