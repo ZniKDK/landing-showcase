@@ -2,6 +2,8 @@
 
 **Демо:** https://znikdk.github.io/landing-showcase/
 
+![Анимация: живые превью пяти лендингов](docs/screenshots/demo.gif)
+
 Одна страница с живыми превью пяти демо-лендингов. Каждый лендинг — отдельный репозиторий со своей страницей на GitHub Pages. Наведите на превью — сайт внутри сам прокрутится.
 
 | Сайт | Ниша | Пакет | Стиль | Демо | Код |
@@ -13,6 +15,12 @@
 | Чистый хвост | Груминг-салон | Эконом | Мягкий пастельный | [открыть](https://znikdk.github.io/landing-grooming/) | [landing-grooming](https://github.com/ZniKDK/landing-grooming) |
 
 Ещё один лендинг со сборкой на Eleventy и отправкой заявок в Telegram через Yandex Cloud Functions — [landing-demo](https://github.com/ZniKDK/landing-demo).
+
+## Скриншоты
+
+| Светлая тема | Тёмная тема |
+|---|---|
+| ![Первый экран, светлая тема](docs/screenshots/light.png) | ![Первый экран, тёмная тема](docs/screenshots/dark.png) |
 
 ## Что общего у всех
 
